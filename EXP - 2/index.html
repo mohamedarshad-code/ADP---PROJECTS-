@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EXP 2 | Premium CSS Showcase</title>
+    <style>
+        :root {
+            --primary: #FF6B00;
+            --secondary: #FFD000;
+            --dark: #0f172a;
+            --white: #ffffff;
+            --gray: #64748b;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: #f8fafc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 50px;
+            /* Task 2: Multiple Backgrounds */
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(255, 107, 0, 0.05) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(255, 208, 0, 0.05) 0px, transparent 50%),
+                url('https://www.transparenttextures.com/patterns/graphy.png');
+            background-attachment: fixed;
+        }
+
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 50px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        /* Task 2: Enhanced Shadows & Rounded Borders */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 50px; /* High Rounded Border */
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 50px;
+            text-align: center;
+            /* Multi-layered Premium Shadow */
+            box-shadow: 
+                0 4px 6px -1px rgba(0, 0, 0, 0.05),
+                0 10px 15px -3px rgba(0, 0, 0, 0.03),
+                0 20px 25px -5px rgba(0, 0, 0, 0.01),
+                inset 0 0 100px rgba(255, 255, 255, 0.5);
+            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-20px) scale(1.02);
+            box-shadow: 
+                0 30px 60px -12px rgba(255, 107, 0, 0.15),
+                0 18px 36px -18px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Task 2: Multiple Backgrounds on Inner Elements */
+        .thumbnail {
+            width: 100%;
+            height: 200px;
+            border-radius: 30px;
+            margin-bottom: 30px;
+            background: 
+                linear-gradient(rgba(15, 23, 42, 0.2), rgba(15, 23, 42, 0.5)),
+                url('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?auto=format&fit=crop&q=80&w=600');
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        h2 { font-weight: 800; color: var(--dark); font-size: 1.8rem; margin-bottom: 15px; }
+        p { color: var(--gray); font-size: 1rem; line-height: 1.7; margin-bottom: 30px; }
+
+        .btn-luxury {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-decoration: none;
+            padding: 15px 35px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 20px rgba(255, 107, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .btn-luxury:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(255, 107, 0, 0.3);
+        }
+
+        .floating-label {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--dark);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+    <div class="showcase-grid">
+        <div class="glass-card">
+            <span class="floating-label">Task 2.0</span>
+            <div class="thumbnail" style="background-image: linear-gradient(rgba(45, 52, 54, 0.1), rgba(45, 52, 54, 0.3)), url('https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&q=80&w=400');"></div>
+            <h2>Geometric Depth</h2>
+            <p>Mastering multi-layered soft shadows and intricate border radii for a tactile digital surface.</p>
+            <a href="#" class="btn-luxury">Explore Design</a>
+        </div>
+        
+        <div class="glass-card">
+            <span class="floating-label">Premium UI</span>
+            <div class="thumbnail" style="background-image: linear-gradient(rgba(45, 52, 54, 0.1), rgba(45, 52, 54, 0.3)), url('https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&q=80&w=400');"></div>
+            <h2>Atmospheric Glow</h2>
+            <p>Utilizing multiple radial-gradient overlays to create a light-refracting ambient finish.</p>
+            <a href="#" class="btn-luxury">View Details</a>
+        </div>
+    </div>
+</body>
+</html>

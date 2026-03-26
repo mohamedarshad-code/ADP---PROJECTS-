@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EXP 5 | Lumina Strategic Roadmap Hub</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #FF6B00;
+            --primary-light: #FF9E00;
+            --dark: #0f172a;
+            --dark-muted: #1e293b;
+            --white: #ffffff;
+            --gray: #f8fafc;
+            --border: #e2e8f0;
+            --grad: linear-gradient(135deg, #FF6B00 0%, #FF9E00 100%);
+            --radius-xl: 30px;
+        }
+
+        * { margin:0; padding:0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background-color: #f1f5f9;
+            color: var(--dark);
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 40px;
+            background-image: 
+                radial-gradient(at 100% 0%, rgba(255, 107, 0, 0.05) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, rgba(255, 107, 0, 0.05) 0px, transparent 50%);
+        }
+
+        .roadmap-app {
+            background-color: var(--white);
+            width: 100%;
+            max-width: 650px;
+            padding: 60px;
+            border-radius: 50px;
+            box-shadow: 0 50px 120px rgba(0,0,0,0.06);
+            border: 1px solid rgba(0,0,0,0.01);
+        }
+
+        header { text-align: center; margin-bottom: 50px; }
+        h1 { font-weight: 900; font-size: 3.2rem; letter-spacing: -3px; line-height: 1; margin-bottom: 10px; }
+        h1 span { color: var(--primary); }
+        p.subtitle { color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.75rem; }
+
+        /* Control Group */
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 15px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        #target-input {
+            padding: 22px 30px;
+            border: 2.5px solid #f1f5f9;
+            border-radius: 24px;
+            font-family: inherit;
+            font-size: 1.05rem;
+            font-weight: 600;
+            outline: none;
+            transition: 0.3s;
+            background: #fbfbfc;
+        }
+
+        #target-input:focus { border-color: var(--primary); background: white; box-shadow: 0 10px 40px rgba(255, 107, 0, 0.1); }
+
+        #add-target-btn {
+            background: var(--grad);
+            color: white;
+            border: none;
+            padding: 0 35px;
+            border-radius: 20px;
+            font-weight: 900;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(255, 107, 0, 0.2);
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        #add-target-btn:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(255, 107, 0, 0.3); }
+
+        /* Task Items */
+        .roadmap-content { list-style: none; padding: 0; margin: 0; }
+
+        .roadmap-item {
+            background: var(--white);
+            border: 1.5px solid #f1f5f9;
+            padding: 25px 35px;
+            border-radius: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            animation: itemIn 0.8s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+        }
+
+        @keyframes itemIn { from { opacity: 0; transform: scale(0.95) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+
+        .roadmap-item:hover { border-color: var(--primary); transform: translateX(10px); box-shadow: 0 20px 50px rgba(0,0,0,0.03); }
+
+        .item-main { flex: 1; display: flex; align-items: center; gap: 20px; }
+
+        .status-indicator {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--primary);
+            box-shadow: 0 0 10px var(--primary);
+            flex-shrink: 0;
+        }
+
+        .item-text { font-weight: 800; font-size: 1.15rem; color: var(--dark-muted); letter-spacing: -0.5px; }
+
+        .roadmap-item.completed { opacity: 0.4; }
+        .roadmap-item.completed .status-indicator { background: #94a3b8; box-shadow: none; }
+        .roadmap-item.completed .item-text { text-decoration: line-through; }
+
+        .btn-rescind {
+            background: #fee2e2;
+            color: #ef4444;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 12px;
+            font-weight: 900;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.2s;
+            visibility: hidden;
+            opacity: 0;
+        }
+
+        .roadmap-item:hover .btn-rescind { visibility: visible; opacity: 1; }
+        .btn-rescind:hover { background: #ef4444; color: white; transform: rotate(5deg) scale(1.1); }
+
+        .empty-state { text-align: center; color: #cbd5e1; font-weight: 800; font-style: italic; font-size: 1.1rem; padding: 60px 0; }
+    </style>
+</head>
+<body>
+    <main class="roadmap-app">
+        <header>
+            <p class="subtitle">Mission Execution</p>
+            <h1>Strategic<span>.</span><br>Roadmap</h1>
+        </header>
+        
+        <div class="controls">
+            <input type="text" id="target-input" placeholder="Initialize a new project objective...">
+            <button id="add-target-btn">Initiate</button>
+        </div>
+
+        <ul class="roadmap-content" id="roadmap-list">
+            <!-- Project objectives will be dynamically pulled and rendered via DOM Manipulation -->
+            <li class="empty-state">Executing Asynchronous Store Handshake...</li>
+        </ul>
+    </main>
+
+    <!-- Task 5: Combined JS -->
+    <script>
+        /**
+         * EXP 5 | STRATEGIC ROADMAP ENGINE
+         * High-performance Dynamic Execution with Data Persistence.
+         */
+
+        const inputField = document.getElementById('target-input');
+        const addButton = document.getElementById('add-target-btn');
+        const listContainer = document.getElementById('roadmap-list');
+
+        // Internal project store
+        let roadmapProjects = JSON.parse(localStorage.getItem('LUMINA_ROADMAP')) || [];
+
+        /**
+         * Boot the execution engine.
+         */
+        const initEngine = () => {
+            renderStoredData();
+            
+            addButton.addEventListener('click', handleProjectSubmission);
+            inputField.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') handleProjectSubmission();
+            });
+        };
+
+        /**
+         * Captures user input and updates the project store.
+         */
+        const handleProjectSubmission = () => {
+            const projectValue = inputField.value.trim();
+            if (!projectValue) return;
+
+            const newProject = {
+                id: Date.now(),
+                text: projectValue,
+                completed: false
+            };
+
+            roadmapProjects.push(newProject);
+            saveAndRefresh();
+            
+            // Clear input
+            inputField.value = '';
+            inputField.focus();
+        };
+
+        /**
+         * Persistence layer: Saves to localStorage and re-renders the DOM.
+         */
+        const saveAndRefresh = () => {
+            localStorage.setItem('LUMINA_ROADMAP', JSON.stringify(roadmapProjects));
+            renderStoredData();
+        };
+
+        /**
+         * Standard Renders: Re-draws the entire list based on the store.
+         */
+        const renderStoredData = () => {
+            listContainer.innerHTML = '';
+
+            if (roadmapProjects.length === 0) {
+                listContainer.innerHTML = '<li class="empty-state">No strategic targets initialized.</li>';
+                return;
+            }
+
+            roadmapProjects.forEach(project => {
+                const item = createProjectCard(project);
+                listContainer.appendChild(item);
+            });
+        };
+
+        /**
+         * Functional component to construct a project card.
+         * @param {Object} projectData The data object for the project.
+         */
+        const createProjectCard = (projectData) => {
+            const li = document.createElement('li');
+            li.className = `roadmap-item ${projectData.completed ? 'completed' : ''}`;
+            
+            li.innerHTML = `
+                <div class="item-main">
+                    <span class="status-indicator"></span>
+                    <span class="item-text">${projectData.text}</span>
+                </div>
+                <button class="btn-rescind" data-id="${projectData.id}">RESCIND</button>
+            `;
+
+            // Toggle logic
+            li.addEventListener('click', (e) => {
+                if (!e.target.classList.contains('btn-rescind')) {
+                    toggleProjectState(projectData.id);
+                }
+            });
+
+            // Deletion logic
+            const delBtn = li.querySelector('.btn-rescind');
+            delBtn.addEventListener('click', () => {
+                animateRemoval(li, projectData.id);
+            });
+
+            return li;
+        };
+
+        /**
+         * Updates the completion state in the store.
+         */
+        const toggleProjectState = (id) => {
+            roadmapProjects = roadmapProjects.map(p => 
+                p.id === id ? { ...p, completed: !p.completed } : p
+            );
+            saveAndRefresh();
+        };
+
+        /**
+         * Handles the removal of a project with a premium animation.
+         */
+        const animateRemoval = (element, id) => {
+            element.style.transform = 'translateX(50px) scale(0.9)';
+            element.style.opacity = '0';
+            element.style.filter = 'blur(10px)';
+
+            setTimeout(() => {
+                roadmapProjects = roadmapProjects.filter(p => p.id !== id);
+                saveAndRefresh();
+            }, 400);
+        };
+
+        // Start the engine
+        initEngine();
+    </script>
+</body>
+</html>

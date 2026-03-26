@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EXP 3 | Intelligent Grid Layout</title>
+    <style>
+        :root {
+            --primary: #FF6B00;
+            --primary-light: #FF8F44;
+            --white: #ffffff;
+            --bg: #0f172a;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.05);
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Task 3: CSS Grid-based layout */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 280px 1fr 1fr 1fr;
+            grid-template-rows: auto auto auto;
+            grid-template-areas: 
+                "sidebar profile stats-1 stats-2"
+                "sidebar main main alert"
+                "sidebar main main chart";
+            gap: 25px;
+            max-width: 1600px;
+            margin: 0 auto;
+            min-height: 95vh;
+        }
+
+        .panel {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .panel:hover { border-color: rgba(255, 107, 0, 0.3); background-color: rgba(255, 255, 255, 0.05); }
+
+        .header-panel { grid-area: profile; }
+        .sidebar { grid-area: sidebar; background: linear-gradient(180deg, rgba(255, 107, 0, 0.05) 0%, transparent 100%); }
+        .main-content { grid-area: main; background-color: rgba(255, 255, 255, 0.02); }
+        .stat-1 { grid-area: stats-1; border-left: 4px solid var(--primary); }
+        .stat-2 { grid-area: stats-2; border-left: 4px solid #FBBF24; }
+        .alert-box { grid-area: alert; background: linear-gradient(135deg, rgba(255, 107, 0, 0.1), transparent); }
+        .chart-box { grid-area: chart; }
+
+        /* Sidebar content */
+        .sidebar h2 { font-weight: 900; letter-spacing: -1px; margin-bottom: 40px; color: var(--primary); }
+        .nav-item { padding: 15px; border-radius: 12px; margin-bottom: 10px; cursor: pointer; transition: 0.2s; }
+        .nav-item:hover { background-color: rgba(255, 255, 255, 0.05); }
+        .nav-item.active { background-color: var(--primary); color: white; }
+
+        /* Stats numbering */
+        .num { font-size: 2.5rem; font-weight: 800; margin: 10px 0; display: block; }
+        .label { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; color: var(--text-dim); }
+
+        /* User Gallery Grid (Grid within Grid) */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .user-chip {
+            background-color: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        /* Task 3: Responsive Grid */
+        @media (max-width: 1400px) {
+            .dashboard {
+                grid-template-columns: 240px 1fr 1fr;
+                grid-template-areas: 
+                    "sidebar profile profile"
+                    "sidebar stats-1 stats-2"
+                    "sidebar main main"
+                    "sidebar chart alert";
+            }
+        }
+
+        @media (max-width: 900px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+                grid-template-areas: 
+                    "profile"
+                    "stats-1"
+                    "stats-2"
+                    "sidebar"
+                    "main"
+                    "chart"
+                    "alert";
+            }
+        }
+
+        .dot { height: 10px; width: 10px; border-radius: 50%; display: inline-block; background-color: #2ecc71; margin-right: 10px; }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <aside class="panel sidebar">
+            <h2>LUMINA<br>DASHBOARD</h2>
+            <div class="nav-item active">Overview</div>
+            <div class="nav-item">Analytics</div>
+            <div class="nav-item">Project Hub</div>
+            <div class="nav-item">Team Space</div>
+            <div class="nav-item">Configuration</div>
+        </aside>
+
+        <header class="panel header-panel">
+            <h3 style="margin:0;">Global System Status</h3>
+            <p style="color:var(--text-dim); font-size: 0.85rem; margin-top:5px;"><span class="dot"></span> All nodes operational</p>
+        </header>
+
+        <div class="panel stat-1">
+            <span class="label">Total Experience</span>
+            <span class="num">15+ Yrs</span>
+            <p style="font-size:0.7rem; color:var(--text-dim);">+4.1% Compared to prev cycle</p>
+        </div>
+
+        <div class="panel stat-2">
+            <span class="label">Project Velocity</span>
+            <span class="num">98.2%</span>
+            <p style="font-size:0.7rem; color:var(--text-dim);">Optimized by AI Hub</p>
+        </div>
+
+        <main class="panel main-content">
+            <h3 style="margin-top:0;">Collaborative Environment</h3>
+            <p style="color:var(--text-dim);">Task 3 implementation showcasing advanced CSS Grid Area mapping and responsive breakpoint logic for a premium application feel.</p>
+            <div class="gallery">
+                <div class="user-chip">Resource #101</div>
+                <div class="user-chip">Resource #204</div>
+                <div class="user-chip">Resource #882</div>
+            </div>
+        </main>
+
+        <div class="panel alert-box">
+            <h4 style="margin:0; color: var(--primary);">System Update</h4>
+            <p style="font-size:0.85rem; margin-top:10px;">Grid Layout 2.0 active. Enhanced rendering for ultra-wide displays.</p>
+        </div>
+
+        <div class="panel chart-box">
+            <h4 style="margin:0;">Network Peak</h4>
+            <div style="height:40px; border-bottom: 2px solid var(--border); margin-top:15px; display:flex; gap:5px; align-items:flex-end;">
+                <div style="width:20%; height:40%; background:var(--primary); opacity:0.3;"></div>
+                <div style="width:20%; height:80%; background:var(--primary); opacity:0.6;"></div>
+                <div style="width:20%; height:100%; background:var(--primary); opacity:1;"></div>
+                <div style="width:20%; height:60%; background:var(--primary); opacity:0.4;"></div>
+                <div style="width:20%; height:90%; background:var(--primary); opacity:0.8;"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
